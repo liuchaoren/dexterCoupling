@@ -1,0 +1,25 @@
+%nprocshared=2
+%mem=4000MB
+%chk=1benzene.chk
+!%rwf=A.rwf
+#p b3lyp/6-31g Pop=Full IOp(3/33=3) EXTRALINKS=l316 Int=NoRaff SCF=Conventional SCf=tighT Symmetry=None
+
+1-benzene
+
+0 1
+C           -0.704      -1.218      0.000
+H           -1.244      -2.155      0.000
+C            0.704      -1.218      0.000
+H            1.244      -2.155      0.000
+C            1.406       0.000      0.000
+H            2.488       0.000      0.000
+C            0.704       1.218      0.000
+H            1.244       2.155      0.000
+C           -0.704       1.218      0.000
+H           -1.244       2.155      0.000
+C           -1.406       0.000      0.000
+H           -2.488       0.000      0.000
+
+
+
+

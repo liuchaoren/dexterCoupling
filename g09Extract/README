@@ -1,0 +1,7 @@
+1 Use G09 to calculate and dump the fock matrix and overlap matrix. Save the two electron integral into the log file.
+2 Use fockmatrix.py to convert the dumped fock matrix and overlap matrix into square matrix, and save it to numpy arrays.
+3 Use Par_diag.py to get the adiabatic orbitals, which localize on the each segments. Obtain the site energies and couplings of the HOMOs and LUMOs 
+  and obtain HOMOs, LUMOs coefficients. 
+4 Use the coefficients of HOMOs and LUMOs obtained from step 3 and plug them in twoElectronIntegral.py to calculate the two electron integrals of 
+  between these states. 
+5 After having the site energies, couplings, two electron integrals, we can construct Hamiltonian and calculate the dexter couplings. 
