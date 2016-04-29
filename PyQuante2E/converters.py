@@ -8,16 +8,9 @@ Date - Jan 25, 2016
 from PyQuante.Molecule import Molecule
 
 from numpy import *
-import Queue
+from elements import elements as elementsdict
 
 def gjf2Molecule(filename):
-
-    elementsdict = {}
-    elements=open('../resource/elements').readlines()
-
-    for eachele in elements:
-        (elename, eleindex) = eachele.split()
-        elementsdict[elename] = eleindex
 
     gjf = open(filename, 'r').readlines()
     moleculeQueue = []
@@ -26,7 +19,9 @@ def gjf2Molecule(filename):
     indexline = gjf[index-1]
 
 
-    while len(indexline.split()) == 0:
+    while len(indexline.split()) == 0 or indexline.split()[0].lower() not in elementsdict:
+        # if len(indexline.split())!=0:
+        #     print indexline.split()[0]
         index = index - 1
         indexline = gjf[index-1]
 
@@ -51,7 +46,7 @@ def gjf2Molecule(filename):
     while len(moleculeQueue) != 0:
         moleculelist.append(moleculeQueue.pop())
 
-    return Molecule(filename, moleculelist, units='Angstrom', charge=int(chg))
+    return Molecule(filename, moleculelist, units='Angstrom', charge=int(chg), multiplicity=multi)
 
 
 

@@ -66,14 +66,14 @@ def blockDiag(F, sequence, basissize):
     
 
 if __name__ == "__main__":
-    from constants import *
-
-    # input 
-    sequence = ['ethylene', 'ethylene']
-    # sequence = ['pPt', 'A', 'T']
+    from constants import basissize_631g as basissize
+    from constants import electronsize_631g as electronsize
+    # input
+    # sequence = ['T', 'T', 'T', 'T', 'T', 'T'] + ['C', 'C', 'C', 'A', 'A', 'A'] + ['A', 'A', 'A', 'G', 'G', 'G'] + ['porphyrin', 'porphyrin', 'porphyrin']
+    sequence = ['A', 'T']
     # unitnum=len(sequence)
     totalbasis = sum([basissize[i] for i in sequence])
-    path="data/2ethylene/distance4.5/"
+    path="data/AT/"
 
 
     # import fock matrix
@@ -101,13 +101,13 @@ if __name__ == "__main__":
     (homoindex, lumoindex) = homolumoIndex(sequence, basissize, electronsize)
     homoFock = blockDiaged[np.array(homoindex)][:, np.array(homoindex)]
     lumoFock = blockDiaged[np.array(lumoindex)][:, np.array(lumoindex)]
-    np.save(path+"homoFock", homoFock.real*hartree)
-    np.save(path+"lumoFock", lumoFock.real*hartree)
+    np.save(path+"homoFock.npy", homoFock.real)
+    np.save(path+"lumoFock.npy", lumoFock.real)
     # np.save("blockevecTransformed", blockevecTransformed)
     # np.save("blockDiaged", blockDiaged)
 
     homoevecs = blockevecTransformed[:, np.array(homoindex)]
     lumoevecs = blockevecTransformed[:, np.array(lumoindex)]
-    np.save(path+"homoevecs", homoevecs.real)
-    np.save(path+"lumoevecs", lumoevecs.real)
+    np.save(path+"homoevecs.npy", homoevecs.real)
+    np.save(path+"lumoevecs.npy", lumoevecs.real)
 
