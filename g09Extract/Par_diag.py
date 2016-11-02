@@ -69,15 +69,15 @@ if __name__ == "__main__":
     from constants import basissize_631g as basissize
     from constants import electronsize_631g as electronsize
     # input
-    # sequence = ['T', 'T', 'T', 'T', 'T', 'T'] + ['C', 'C', 'C', 'A', 'A', 'A'] + ['A', 'A', 'A', 'G', 'G', 'G'] + ['porphyrin', 'porphyrin', 'porphyrin']
-    sequence = ['A', 'T']
+    sequence = ['porphyrin','A', 'A', 'A', 'T', 'T', 'porphyrin']
     # unitnum=len(sequence)
     totalbasis = sum([basissize[i] for i in sequence])
-    path="data/AT/"
+    # assert(totalbasis == 874)
+    path="data/porphyrin+DNA/porphyrin+AAATTT-T/"
 
 
     # import fock matrix
-    fockmatrix = np.load(path+"fock.npy")
+    fockmatrix = np.load(path+"fockmatrix.npy")
     overlap = np.load(path+"overlap.npy")
     # overlapinv = inv(overlap)
     # h_at_segment = []

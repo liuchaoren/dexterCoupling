@@ -9,13 +9,15 @@ from infoExtract import numOfBasisSet, numOfAlphaAndBetaElectrons
 
 outputfile="pPt+AATT.log"
 
-def StartLine(patern, fileObject):
+def StartLine(fileObject):
 # find the line number where overlap matrix starts, count from 0
-	counter = 0
+	lineNum = 0
+	pattern = "Dump"
 	for eachline in fileObject:
-		if re.search(patern, eachline):
-			return counter
-		counter = counter + 1
+		if re.search(pattern, eachline):
+			elementNum = int(eachline.split()[5])
+			return (lineNum+1, elementNum)
+		lineNum = lineNum + 1
 
 def OverlapLineNum(basisNum):
 # sum is the number of lines which contains overlap matrix, rippedList is the line index which should be removec

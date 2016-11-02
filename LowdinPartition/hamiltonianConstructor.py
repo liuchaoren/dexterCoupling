@@ -34,10 +34,10 @@ def twoEhandler(i,j,x,y, twoElectronMap, signlist=((),())):
 				counterchange = counterchange + 1
 
 	# return (ij|xy)
-	newi = max(i,j)
-	newj = min(i,j)
-	newx = max(x,y)
-	newy = min(x,y)
+	newi = min(i,j)
+	newj = max(i,j)
+	newx = min(x,y)
+	newy = max(x,y)
 	return (-1)**counterchange * twoElectronMap[(newi, newj, newx, newy)]
 
 def twoEhandlerNoExchange(i,j,x,y, twoElectronMap, signlist=((),())):
@@ -54,10 +54,10 @@ def twoEhandlerNoExchange(i,j,x,y, twoElectronMap, signlist=((),())):
 				counterchange = counterchange + 1
 	# return (ij|xy)
 	if i==j and x==y:
-		newi = max(i,j)
-		newj = min(i,j)
-		newx = max(x,y)
-		newy = min(x,y)
+		newi = min(i,j)
+		newj = max(i,j)
+		newx = min(x,y)
+		newy = max(x,y)
 		return (-1)**counterchange * twoElectronMap[(newi, newj, newx, newy)]
 	else:
 		return 0
@@ -76,10 +76,10 @@ def twoEhandlerNo4CenterExchange(i,j,x,y, twoElectronMap, signlist=((),())):
 				counterchange = counterchange + 1
 	# return (ij|xy)
 	if i==j or x==y:
-		newi = max(i,j)
-		newj = min(i,j)
-		newx = max(x,y)
-		newy = min(x,y)
+		newi = min(i,j)
+		newj = max(i,j)
+		newx = min(x,y)
+		newy = max(x,y)
 		return (-1)**counterchange * twoElectronMap[(newi, newj, newx, newy)]
 	else:
 		return 0
@@ -99,10 +99,10 @@ def twoEhandlerNo4CenterExchangePlus(i,j,x,y, twoElectronMap, signlist=((),())):
 				counterchange = counterchange + 1
 	# return (ij|xy)
 	if i==j or x==y or (i==x and j==y) or (i==y and j==x):
-		newi = max(i,j)
-		newj = min(i,j)
-		newx = max(x,y)
-		newy = min(x,y)
+		newi = min(i,j)
+		newj = max(i,j)
+		newx = min(x,y)
+		newy = max(x,y)
 		return (-1)**counterchange * twoElectronMap[(newi, newj, newx, newy)]
 	else:
 		return 0
@@ -220,28 +220,28 @@ def BridgeExcitonHamiltonian(H, dim):
 
 	return H[array(indexkeep), :][:, array(indexkeep)]
 #
-# def CISHamiltonian():
-# 	H = np.zeros([dim**2,dim**2])
-# 	for i in range(dim):
-# 		for x in range(dim):
-# 			I = i * dim + x
-# 			for j in range(dim):
-# 				for y in range(dim):
-# 					J = j * dim + y
-# 					Hixjy=0.0
-# 					if i == j:
-# 						Fxy = lumoFockM[x,y]
-# 						Hixjy = Hixjy + Fxy
-# 					if x == y:
-# 						Fij = homoFockM[i,j]
-# 						Hixjy = Hixjy - Fij
-# 					# twoEijxy = twoEhandlerNoExchange(i, j, x, y, twoElectronMap)
-# 					# twoEijxy = twoEhandlerNo4CenterExchange(i, j, x, y, twoElectronMap)
-# 					# twoEijxy = twoEhandlerNo4CenterExchangePlus(i, j, x, y, twoElectronMap)
-# 					twoEijxy = twoEhandler(i, j, x, y, twoElectronMap)
-# 					Hixjy = Hixjy - twoEijxy
-# 					H[I, J] = Hixjy
-# 	return H
+def CISHamiltonian(dim, homoFockM, lumoFockM, twoElectronMap):
+	H = np.zeros([dim**2,dim**2])
+	for i in range(dim):
+		for x in range(dim):
+			I = i * dim + x
+			for j in range(dim):
+				for y in range(dim):
+					J = j * dim + y
+					Hixjy=0.0
+					if i == j:
+						Fxy = lumoFockM[x,y]
+						Hixjy = Hixjy + Fxy
+					if x == y:
+						Fij = homoFockM[i,j]
+						Hixjy = Hixjy - Fij
+					# twoEijxy = twoEhandlerNoExchange(i, j, x, y, twoElectronMap)
+					# twoEijxy = twoEhandlerNo4CenterExchange(i, j, x, y, twoElectronMap)
+					# twoEijxy = twoEhandlerNo4CenterExchangePlus(i, j, x, y, twoElectronMap)
+					twoEijxy = twoEhandler(i, j, x, y, twoElectronMap)
+					Hixjy = Hixjy - twoEijxy
+					H[I, J] = Hixjy
+	return H
 
 def EqualDA(H):
     ED = H[0,0]
@@ -340,110 +340,27 @@ def CISThreeWayJ(Hcouplings, Lcouplings, centers):
 
 
 if __name__ == "__main__":
-	lowerhomoslumos = 0.00 # move homos of bridge sites up by lowerhomoslumos and move lumos of bridge sites down by lowerhomoslumos
-	centers = load("../g09Extract/data/3wj/zindo/centers.npy")
-	homoFock = load("../g09Extract/data/3wj/zindo/homoFock.npy" )
-	lumoFock = load("../g09Extract/data/3wj/zindo/lumoFock.npy" )
+	# lowerhomoslumos = 0.00 # move homos of bridge sites up by lowerhomoslumos and move lumos of bridge sites down by lowerhomoslumos
+	# centers = load("../g09Extract/data/3wj/zindo/centers.npy")
+	path = "../g09Extract/data/porphyrin+DNA/porphyrin+AGATTT/"
+	# homoFockM = load(path + "homoFock_orth.npy")
+	# lumoFockM = load(path + "lumoFock_orth.npy")
+	homoFockM = load(path + "homoFock_orth.npy" )
+	# homoFockM[2,2] = (homoFockM[1,1] + homoFockM[3,3])/2
+	lumoFockM = load(path + "lumoFock_orth.npy" )
+	# lumoFockM[2,2] = (lumoFockM[1,1] + lumoFockM[3,3])/2
+	dim = 8
+	twoElectronMap = twoEmap(path + "twoE_orth")
+	# twoElectronMap = twoEmap("../g09Extract/data/porphyrin+DNA/porphyrin+AGATTT/" + "twoE_orth")
+	# twoElectronMap = twoEmap("../nonorthogonality/porphyrin+AATT/twoE_orth")
+	H = CISHamiltonian(dim, homoFockM, lumoFockM, twoElectronMap)
+	# HB = BridgeExcitonHamiltonian(H, dim);
+	# HCT = CTExcitonHamiltonian(H, dim);
 
-	CISH = CISThreeWayJ(homoFock, lumoFock, centers)
-	save('CISH.npy', CISH)
-
-    # output = open("results/alkanes/coupling_noExchange_lower%s" % lowerhomoslumos, "w")
-    # output = open("results/polynorbornyl/parallel/coupling_allExchange_lower%s" % lowerhomoslumos, 'a')
-    # output.write("# couplings of of polynorbornyl with 2 repeats and 3 repeats. Exchanges are all included\n\n# repeats num 	total     BE      CT\n")
-    # iteratornum = 2000
-    # scanarray1=arange(-1e-8, 1e-8, 1e-11)
-    # scanarray2=arange(-1e-8, 1e-8, 1e-11)
-    # scanarray3=arange(-1e-9, 1e-9, 1e-11)
-
-    # for i in [4, 5, 6, 7, 8, 9, 10, 11, 12, 13]:
-    #     if i in [7, 13]:
-    #         twoE = "../G092E/data/alkyl/b%s/linear/symm/twoEtwoElectron" % i
-    #         homoFockFile = "../g09Extract/data/alkyl/b%s/linear/symm/homoFock.npy" % i
-    #         lumoFockFile = "../g09Extract/data/alkyl/b%s/linear/symm/lumoFock.npy" % i
-    #     else:
-    #         twoE = "../G092E/data/alkyl/b%s/symm/twoEtwoElectron" % i
-    #         homoFockFile = "../g09Extract/data/alkyl/b%s/symm/homoFock.npy" % i
-    #         lumoFockFile = "../g09Extract/data/alkyl/b%s/symm/lumoFock.npy" % i
-    #
-    # for i in [3]:
-    #     twoE = "../G092E/data/alkyl/b13/folded/twoEtwoElectron%s" % i
-    #     homoFockFile = "../g09Extract/data/alkyl/b13/folded/homoFock_%s.npy" % i
-    #     lumoFockFile = "../g09Extract/data/alkyl/b13/folded/lumoFock_%s.npy" % i
-    #
-    # for i in [3]:
-    #     twoE = "../G092E/data/polynorbornyl/parallel/repeats_%s/twoEtwoElectron" % i
-    #     homoFockFile = "../g09Extract/data/polynorbornyl/parallel/repeats_%s/homoFock.npy" % i
-    #     lumoFockFile = "../g09Extract/data/polynorbornyl/parallel/repeats_%s/lumoFock.npy" % i
-
-        # homoFockM = np.load(homoFockFile)
-        # lumoFockM = np.load(lumoFockFile)
-        # twoElectronMap = twoEmap(twoE)
-        # EDAgap = 0.1
-        # dim =homoFockM.shape[0]
-
-        # H = CISHamiltonian()
-        # HoleH = HoleHamiltonian()
-        # ElectronH = EHamiltonian()
-        # H = lowerGap(H, dim, lowerhomoslumos)
-        # print lowdinPartition(H)[0,1]
-        # H = EqualDA(H)
-        # HBE = BridgeExcitonHamiltonian(H, dim)
-        # HCT = CTExcitonHamiltonian(H,dim)
-        # save("H%s_0.0.npy" % i, H)
-        # save("HBE%s_0.0.npy" % i, HBE)
-        # save("HCT%s_0.0.npy" % i, HCT)
-        # (evalH,evecH) = eig(H)
-        # assert(abs(evecH[0,0]) > 0.6 and abs(evecH[-1,0]) > 0.6 and abs(evecH[0,1])> 0.6 and abs(evecH[-1,1]) > 0.6)
-        # (evalHBE,evecHBE) = eig(HBE)
-        # assert(abs(evecHBE[0,0]) > 0.6 and abs(evecHBE[-1,0]) > 0.6 and abs(evecHBE[0,1])> 0.6 and abs(evecHBE[-1,1]) > 0.6)
-        # (evalHCT,evecHCT) = eig(HCT)
-        # assert(abs(evecHCT[0,0]) > 0.6 and abs(evecHCT[-1,0]) > 0.6 and abs(evecHCT[0,1])> 0.6 and abs(evecHCT[-1,1]) > 0.6)
-
-        # totalcoup = combineOpt(H, iteratornum, scanarray1) * hartree
-        # print "total calculation for %s is done" % i
-        # print "total CIS coupling is", totalcoup
-        # BEcoup = combineOpt(HBE, iteratornum, scanarray2) * hartree
-        # print "BE calculation for %s is done" % i
-        # print "total BE CIS coupling is", BEcoup
-        # CTcoup = combineOpt(HCT, iteratornum, scanarray3) * hartree
-        # print "CT calculation for %s is done" % i
-        # print "total CT CIS coupling is", CTcoup
-
-        # totalcoup = abs((evalH[0]-evalH[1])/2 * hartree)
-        # BEcoup = abs((evalHBE[0]-evalHBE[1])/2 * hartree)
-        # CTcoup = abs((evalHCT[0]-evalHCT[1])/2 * hartree)
-        # totalcoup = lowdinPartition(H)[0,1] * hartree
-        # totalHoleCoup = lowdinPartition(HoleH)[0,1] * hartree
-        # totalElectronCoup = lowdinPartition(ElectronH)[0,1] * hartree
-        # BEcoup = lowdinPartition(HBE)[0,1] * hartree
-        # CTcoup = lowdinPartition(HCT)[0,1] * hartree
-        # H = EqualDA(H)
-        # HBE = EqualDA(HBE)
-        # HCT = EqualDA(HCT)
-        # HoleH = EqualDA(HoleH)
-        # ElectronH = EqualDA(ElectronH)
-        # (eval, evec) = eig(H)
-        # print evec[:,0]
-        # print evec[:,1]
-        # print "total CIS coupling is", totalcoup
-        # print "total BE CIS coupling is", BEcoup
-        # print "total CT CIS coupling is", CTcoup
-        # print "total hole coupling is", totalHoleCoup
-        # print "total electron coupling is", totalElectronCoup
-        #
-        # output.write("%d\t%e\t%e\t%e\n" % (i, totalcoup, BEcoup, CTcoup))
-        # HCT = CTExcitonHamiltonian(H)
-        # save("data/alkyl/b7/symm/H_allExchanges.npy", H)
-
-
-
-
-
-
-
-
-
-
+	# save(path + "H_nonorth.npy", H)
+	# save("../LowdinPartition/data/porphyrin+AATT/H_orth.npy", H)
+	Hdiag = [H[i,i] for i in range(64)]
+	print sort(Hdiag)
+	print lowdinPartition(H)
 
 

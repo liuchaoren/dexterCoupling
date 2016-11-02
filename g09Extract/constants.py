@@ -1,6 +1,6 @@
 import numpy as np
 # 6-31G basis
-basissize_631g = {'A':100, 'T':93, 'pPt':262, 'porphyrin':244, 'ethylene': 26, 'alkane4':87, 'alkane5':100, 'alkane6':113, 'alkane7':126, 'alkane8':139, 'alkane9':152, 'alkane10':165, 'alkane11':178,
+basissize_631g = {'A':100, 'G':109, 'T':93, 'pPt':262, 'porphyrin':244, 'ethylene': 26, 'alkane4':87, 'alkane5':100, 'alkane6':113, 'alkane7':126, 'alkane8':139, 'alkane9':152, 'alkane10':165, 'alkane11':178,
              'alkane12':191, 'alkane13':204, "poly_repeats_2_orth": 145, "poly_repeats_3_orth": 202}
 
 basissize_sto3g = {'A':55, "G":60, "T":51, "C":45, "3wj":1353, "porphyrin": 134}
@@ -8,7 +8,7 @@ basissize_sto3g = {'A':55, "G":60, "T":51, "C":45, "3wj":1353, "porphyrin": 134}
 basissize_zindo = {'A':45, 'T': 42, 'G': 49, 'C': 37, 'porphyrin': 110}
 electronsize_zindo = {"A": 25, "T": 24, "G": 28, "C": 21, "porphyrin": 57}
 
-electronsize_631g={'A':35, 'T':33, 'pPt':89, 'porphyrin':81, 'ethylene': 8}
+electronsize_631g={'A':35, 'G':39, 'T':33, 'pPt':89, 'porphyrin':81, 'ethylene': 8}
 electronsize_sto3g = {'A':35, 'G':39, 'T':33, 'C': 29, 'porphyrin':81}
 
 # homos, lumos in order of D, B1, B2, ... A. zero-based
